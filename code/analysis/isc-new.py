@@ -3,7 +3,7 @@
 
 
 ####### DESCRIPTION #######
-# This script takes the preprocessed images output from slurm_create-data_preproc.ipynb
+# This script takes the preprocessed images output from slurm_create-data_preproc.ipynb and makes them cool -- i.e. reshapes and performs ISC
 
 ### Imports 
 
