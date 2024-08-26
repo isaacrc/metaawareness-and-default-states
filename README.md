@@ -27,7 +27,8 @@ The “default mode” of cognition usually refers to an automatic tendency to s
 * install environement dependencies
 ```
 cd code
-pip install environment.yml
+conda env create -f environment.yml
+conda activate mei_project
 ```
 
 * Download fMRI data via dropbox
