@@ -24,7 +24,7 @@ The “default mode” of cognition usually refers to an automatic tendency to s
 
 ### Getting Started
 * Clone the Repo
-* install environement dependencies
+* Create conda environement from .yml file
 ```
 cd code
 conda env create -f environment.yml
@@ -37,6 +37,11 @@ cd data
 wget https://www.dropbox.com/sh/q51dsflo1riw9rf/AABcle7SHyfWi04KIAdcF-n-a?dl=0
 ```
 
+* Start preprocessing fMRI data for ISC analysis
+```
+cd code/analysis
+python slurm_create-data_preproc.py
+```
 
 ## Authors
 Isaac R. Christian <br>
