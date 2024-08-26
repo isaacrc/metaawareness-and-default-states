@@ -40,5 +40,5 @@ wget https://www.dropbox.com/sh/q51dsflo1riw9rf/AABcle7SHyfWi04KIAdcF-n-a?dl=0
 ## Authors
 Isaac R. Christian <br>
 Samuel A. Nastase <br>
-Mindy Yu  <br>
+Lauren K. Kim  <br>
 Michael S. A. Graziano
