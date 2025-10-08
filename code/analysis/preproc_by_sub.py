@@ -3,17 +3,10 @@
 
 ##################################################################
 # This script runs ISC, BUT FOR EACH SUBJECT
+# It follows preproc_1.py
 # IT IS USED FOR STATS IN UNTHRESH_ISC.ipynb
 ##################################################################
 
-# ## py conversion
-
-# In[1]:
-
-
-"""
-COPIED FROM ISC-NEW.PY
-"""
 
 
 # ## Imports 
