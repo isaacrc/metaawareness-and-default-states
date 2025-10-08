@@ -32,11 +32,7 @@ conda env create -f environment.yml
 conda activate mei_project
 ```
 
-* Download fMRI data
-```
-cd data
-wget https://doi.org/10.34770/5kae-7k45
-```
+* Download fMRI data into /data (see above link)
 
 * Start preprocessing fMRI data for ISC analysis
 ```
