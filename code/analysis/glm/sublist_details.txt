@@ -1,0 +1,99 @@
+SUBLIST DETAILS
+
+"""
+
+========================================================
+===== ~~~ Summary ALL ~~~ ===== 
+========================================================
+Initially exclude: sub-001, sub-003, sub-011, sub-012, sub-014, sub-015, sub-029 (3+ runs still available tho)
+Maybe exclude: sub-014, sub-024, sub-037 (No button presses)
+Maybe exclude: sub-020, sub-022, sub-031
+total exclude = 10
+
+
+~~~~~~~ BEHAVIORAL ~~~~~~~~~~
+~~~ Summary behavioral ~~~
+
+========================================================
+========================================================
+No button presses: sub-014, sub-020, sub-037 
+
+========================================================
+========================================================
+sub-003: Extra row observed for external, which was manually deleted. Should be fine to rerun -- i removed from bad_subs
+    - current brushing: 87, TRUE: 88 for THREE runs. last run when there was an issue and scan had to be restarted
+    - Scan 6 == 1 run of brushing
+    - Scan 7 = 3 runs of brushing 
+    - ** no idea when run 7 was started tho! will prolly need to throw out! For now we can process all
+sub-014: NO internal OR external bpress, curious! ---should be fixed now
+    - changed excel data to include two null columns
+    - ALSO only 30 TRs for the second run epi data. i went into the room to adjust runny eyes. Data for this run is not usable. but after should
+      be okay if u want to put in the effort 
+sub-015: less than 24 runs ---should be fixed now w custom code (but keep out of main run cuz will throw an error otherwise )
+    - SUMMARY: need to exclude the office run 3 for fMRI but can include run 3 in behavioral, no data at all for CAKE
+    - DID NOT add the 'mov_name' component to the custom code, will need to implment from current iteration
+    - **** Use external, ignore internal for now... cuz internal is fuqd. Can preprocess all 7 tho
+
+~~~~~~~ FMRI ~~~~~~~~~~
+~~~ Summary fMRI ~~~
+sub002: 
+ - appended two TRs onto the last run, copied from the third to last TR. should be good to use
+sub-003, sub-012, sub-014, sub-015, sub-029: 
+ - Five runs usable, will need to incorporate them at some point 
+sub-001: external usable - first three runs 
+
+========================================================
+========================================================
+subject 002: (usable, with adjustment)
+    only has 92 INSTEAD OF 94 TRs for the FINAL run of shrek. i think cuz i turned off the scanner
+    too soon, which didn't account for 4 TRs of buffer? Yep! end tr is 390, (388, 112179). so duplicate TRs maybe.
+    - Temporarily eliminate! or duplicate TRs 
+    
+sub-003: (usable, 5 runs)
+- Scan 6 == 1 run of brushing
+- Scan 7 = 3 runs of brushing 
+*** need to re-preprocess, then append 6 and 7 together; or just throw out this one cuz idk when scan started
+
+sub-011: (usable)
+- not preprocessed 
+sub-012 (5 runs usable, one run idk)
+- I'll need to post process. It seems that an earbud fell out while reading the directions for run 5 
+summary: the fifth run  needs to be discarded. all others are usable.
+see the behav data: 
+sub_dic['External']['oragami']
+{'run-1': {'start_tr': 94, 'end_tr': 188, 'bpress': -1},
+ 'run-2': {'start_tr': 188, 'end_tr': 282, 'bpress': [100.81657150003593]},
+ 'run-3': {'start_tr': 282, 'end_tr': 376, 'bpress': [88.26579949003644]},
+ 'run-4': {'start_tr': 378,
+  'end_tr': 472,
+  }
+- you can see taht the start TR is 94!! that's becuz i had to go into the scan room during the instructions screen.
+- this is producing the wrong indexing -- becuz the scan doesn't contain enough TRs according to the behavioral data:
+    - run 4 of shrek only has 12 TRs because we start at TR 94.
+- im not sure when the scan actually started, but if i wanted to try to include i could 
+    set the start TR to 1 -- essentially suggesting that the first TR was collected on the external 'waiting 
+    for TR' flip. might as well try at some point, but exclude for now
+    - this would involve just subtracting 94 from all start end end TRs i think
+See the excel behavioral file for further notes notes
+this 
+
+sub-014 - no button press data and 7 runs (5 runs usable, but no bpress)
+    - same problem as above -- i went into the scanner room during the instructions period to wipe eyes
+    {'run-1': {'start_tr': 237, 'end_tr': 323, 'bpress': -1},
+     'run-2': {'start_tr': 329, 'end_tr': 415, 'bpress': -1},
+     'run-3': {'start_tr': 417, 'end_tr': 503, 'bpress': -1},
+     'run-4': {'start_tr': 509, 'end_tr': 595, 'bpress': -1}}
+
+sub-029: (5 runs usable)
+- scanner malfunction, maybe possible to stitch together run 6 cuz i started on the *tenth* TR
+
+========================================================
+========================================================
+Left handed: (sub-020, sub-022, sub-032)
+    - sub-020: also no button presses, appeared to be awake tho
+    - sub-022: lefty
+    - sub-031: ambidexterious, great data
+
+========================================================
+========================================================
+"""
