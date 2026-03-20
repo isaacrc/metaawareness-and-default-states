@@ -1,0 +1,7 @@
+Cluster ID,Size (voxels),x,y,z,Peak Z,Harvard-Oxford Label
+6,75,3.5,16.27,34.3,5.516215883872248,Paracingulate Gyrus
+3,43,-24.41,52.33,-10.27,4.743497784917836,Background
+5,74,14.89,-65.74,8.34,-3.623298491745464,"Lateral Occipital Cortex, inferior division"
+2,52,-47.37,-50.0,-17.17,-3.629643845347586,"Inferior Temporal Gyrus, posterior division"
+1,33,-37.18,-84.24,-19.77,-3.6561955626759115,"Lateral Occipital Cortex, superior division"
+4,41,-18.09,-89.33,-4.01,-3.6605400048464136,Supracalcarine Cortex

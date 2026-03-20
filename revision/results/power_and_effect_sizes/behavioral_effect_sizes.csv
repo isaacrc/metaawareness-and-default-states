@@ -1,0 +1,28 @@
+analysis,test_type,term,statistic,effect_size_type,effect_size_value,cohens_f2,N,power,p
+Main behavioral LME,LME term,run_cont,"t=3.620, p=0.0003",partial_eta2,0.013765556294105714,0.013957691684727602,39,0.11096833302348996,0.00029469119852804635
+Main behavioral LME,LME term,cond_int,"t=10.884, p=0.0000",partial_eta2,0.10658905888188085,0.11930574607524148,39,0.5560609808300174,1.3782236128822901e-27
+Main behavioral LME,LME term,sal_low,"t=2.119, p=0.0341",partial_eta2,0.0047825526293724325,0.004805535355120607,39,0.07061829728332902,0.03408632300251556
+Main behavioral LME,LME term,run_cont:cond_int,"t=-5.433, p=0.0000",partial_eta2,0.03021557499280185,0.031157001714662076,39,0.18899088253513596,5.5462880324930064e-08
+Main behavioral LME,LME term,run_cont:sal_low,"t=0.082, p=0.9344",partial_eta2,7.266689121710263e-06,7.266741926864773e-06,39,0.05003081853843783,0.9344112394686913
+Main behavioral LME,LME term,cond_int:sal_low,"t=-3.705, p=0.0002",partial_eta2,0.014406503770175237,0.01461708485829524,39,0.1139186798809817,0.00021115012835964554
+Main behavioral LME,LME term,run_cont:cond_int:sal_low,"t=1.235, p=0.2166",partial_eta2,0.0016337180668394534,0.0016363914691470208,39,0.05696861930055275,0.21664975683758736
+Main behavioral LME,LME model,model,Nakagawa R²,R2_marginal,0.3933456690047514,,39,,
+Main behavioral LME,LME model,model,Nakagawa R²,R2_conditional,0.7424159947781861,,39,,
+External vs Internal bpress,paired t-test,External vs Internal,"t(38)=-4.526, p=0.0001",cohens_d,0.7247412425725994,,39,0.9928375277983617,5.7647542604939345e-05
+External: High vs Low salience bpress,paired t-test,HighSal vs LowSal,"t(38)=-4.257, p=0.0001",cohens_d,0.681659675198125,,39,0.9856347458410795,0.0001307974208715253
+Internal: High vs Low salience bpress,paired t-test,HighSal vs LowSal,"t(38)=3.418, p=0.0015",cohens_d,0.5472952168917233,,39,0.9147056996273106,0.0015186786371570763
+External: Run1 vs Run4 bpress,paired t-test,Run1 vs Run4,"t(38)=-5.214, p=0.0000",cohens_d,0.8348939242309074,,39,0.9990907175945934,6.793808615414955e-06
+Internal: Run1 vs Run4 bpress,paired t-test,Run1 vs Run4,"t(38)=3.479, p=0.0013",cohens_d,0.5570753743143115,,39,0.923610208775399,0.0012789625199951633
+Engagement ~ bpress (External),LME term,engagement,"t=-3.526, p=0.0004",partial_eta2,0.0951563032123791,0.10516324924426541,36,0.9161241152080503,0.000421529028600498
+Engagement ~ bpress (External),LME model,model,R2_marginal,R2_marginal,0.38675757215052387,,36,,
+Engagement ~ bpress (Internal),LME term,engagement,"t=3.464, p=0.0005",partial_eta2,0.09518068142336202,0.10519302524739389,36,0.9137393296469151,0.000533177426534654
+Engagement ~ bpress (Internal),LME model,model,R2_marginal,R2_marginal,0.443802196287347,,36,,
+ISC: External vs Internal,paired t-test,External vs Internal,"t(37)=18.283, p=0.0000",cohens_d,2.9658496792561366,,38,1.0,4.0663604770474166e-20
+ISC External: Run 1 vs Run 4,paired t-test,Run1 vs Run4,"t(38)=15.572, p=0.0000",cohens_d,2.4935704667305574,,39,1.0,4.409032756208857e-18
+ISC Internal: Run 1 vs Run 4,paired t-test,Run1 vs Run4,"t(37)=12.753, p=0.0000",cohens_d,2.068797399780462,,38,1.0,4.113265494646004e-15
+ISC: High vs Low Salience,paired t-test,High vs Low salience,"t(38)=-0.046, p=0.9638",cohens_d,0.007313613838839059,,39,0.05022718723747814,0.9638096672601288
+ISC LME,LME term,run_cont,"t=-92.855, p=0.0000",delta_R2_marginal,0.05764545939584281,,39,,0.0
+ISC LME,LME term,cond_int,"t=-75.028, p=0.0000",delta_R2_marginal,0.08814705297041596,,39,,0.0
+ISC LME,LME term,run_cont:cond_int,"t=21.238, p=0.0000",delta_R2_marginal,0.0020898945936715096,,39,,4.2769824991409475e-100
+ISC LME,LME model,model,Nakagawa R²,R2_marginal,0.1437027464999078,,39,,
+ISC LME,LME model,model,Nakagawa R²,R2_conditional,,,39,,

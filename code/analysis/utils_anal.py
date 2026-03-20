@@ -41,8 +41,10 @@ from nilearn.input_data import NiftiSpheresMasker
 from nilearn.glm.first_level import FirstLevelModel
 from nilearn.glm.first_level import make_first_level_design_matrix
 from nilearn.image import concat_imgs, resample_img, mean_img,index_img
+
 from nilearn import image
 from nilearn import masking
+from nilearn.masking import unmask
 from nilearn.plotting import view_img
 from nilearn.image import resample_to_img
 
@@ -72,7 +74,7 @@ fmri_prep = data_dir + '/bids/derivatives/fmriprep'
 conf_dir = work_dir + '/confs'
 preproc_dir = work_dir + '/preproc'
 isc_dir = work_dir + '/isc_dat'
-
+schaef_dir = '/jukebox/graziano/coolCatIsaac/mei/data/work/schaefer_atlas'
 
 
 #### LOAD FUNCTIONS #### 
@@ -207,7 +209,8 @@ def resample_atlas(atlas_filename, fmri_prep):
     - atlas_nii: the nifti image
     """
     # Load  sample data for resampling
-    resamp_run = load_epi_data(fmri_prep, 'sub-007', 2, "MNI")
+    s7 = np.load(f'{preproc_dir}/sub-007_fwhm6_conf_4D.npy', allow_pickle=True).item()
+    resamp_run = s7[1] # grab the first run
     # Load parcellation
     d = nib.load(atlas_filename)
     atlas_nii = resample_to_img(d, resamp_run, interpolation='nearest')
@@ -225,7 +228,7 @@ def get_network_labels(num_parc, num_net):
     output: networks, network labels and network indices
     """
     ## get filename ##
-    label_fn = f'brainiak-aperture-isc-data/Schaefer2018_{num_parc}Parcels_{num_net}Networks_order.txt'
+    label_fn = f'{schaef_dir}/Schaefer2018_{num_parc}Parcels_{num_net}Networks_order.txt'
     
     with open(label_fn) as f:
         networks = [' '.join((label.split('_')[1][0], label.split('_')[2]))
@@ -242,3 +245,139 @@ def get_network_labels(num_parc, num_net):
     print(f'two networks: {network_labels[:2]} \n total nets: {len(network_labels)}')
     
     return networks, network_labels, network_idxs
+
+
+
+def wsfc_mat(int_isc_mov_run, num_parc):
+    """
+    purpose: compute wsfc matrices
+    input: TR x vox x subs [e.g. (98, 112179, 19)]
+    ouput: parc x parc x sub [e.g. (200, 200, 19)]
+    """
+    # create empty matrix 
+    reshape_mat = np.zeros((num_parc, num_parc, 0))
+    
+    ## get correlation matrices
+    for sub in range(int_isc_mov_run.shape[2]):
+        #one_sub = np.expand_dims(convert_2d_to_schaef(intact_parcels_1[..., sub]), 2)
+        one_sub = convert_2d_to_schaef(int_isc_mov_run[..., sub])
+        cor_mat = np.expand_dims(np.corrcoef(one_sub.T),2)
+        reshape_mat = np.dstack((reshape_mat, cor_mat))
+        print(reshape_mat.shape)
+    return reshape_mat
+
+
+def wsfc_mat_fish(int_isc_mov_run, num_parc):
+    """
+    purpose: compute wsfc matrices
+    input: TR x vox x subs [e.g. (98, 112179)]
+    ouput: parc x parc x sub [e.g. (200, 200, 19)]
+    """
+    # create empty matrix 
+    reshape_mat = np.zeros((num_parc, num_parc, 0))
+    
+    ## get correlation matrices
+    for sub in range(int_isc_mov_run.shape[2]):
+        #one_sub = np.expand_dims(convert_2d_to_schaef(intact_parcels_1[..., sub]), 2)
+        one_sub = convert_2d_to_schaef(int_isc_mov_run[..., sub])
+        #print(one_sub.shape)
+        #intact_fcs = fisher_mean([np.corrcoef(s) for s in one_sub.T],
+         #                axis=0)
+  
+        #print(intact_fcs.shape)
+        #cor_mat = np.expand_dims(intact_fcs,2)
+        cor_mat = np.expand_dims(np.corrcoef(one_sub.T),2)
+        reshape_mat = np.dstack((reshape_mat, cor_mat))
+        print(reshape_mat.shape)
+    reshape_mat_fish = np.arctanh(reshape_mat) #### FISHER transform
+    print('fisher transform, now: ', reshape_mat_fish.shape)
+    return reshape_mat_fish
+
+
+def wsfc(wsfc_mat, perm):
+    """
+    ***** FISHER TRANSFORM AT SOME POINT 
+    purpose: permuted matrix across subs
+    input: 
+        - 3D mat TRs x Vox x Subjects
+        - perm: True/False - do you want to permute?
+    return: permuted (or not) 2D mat Parcels x Parcels square matrix (i.e. 200x200)  
+    """
+    ## permute the input matrix? 
+    if perm:
+        # get number of subs -- ** they will be dif depending on how many subs are included
+        num_subs = wsfc_mat.shape[2]
+        ## create random array of 1s and 0s to randomly sign flip each matrix
+        #rand_arr = np.random.choice([-1, 1], size=num_subs, replace=True)
+        rand_arr = np.random.choice([-1, 1], size=(num_subs, 1, 1), replace=True)
+        # add dimensions to rand_arr so that it can be broadcast to each matrix
+        #wsfc_mat = rand_arr[:, np.newaxis, np.newaxis] * wsfc_mat
+        wsfc_mat = rand_arr * np.rollaxis(wsfc_mat, axis =2)
+    ## return the average across subjects *** what about fisher transformation!!! ****
+    av_across_subs = np.nanmean(wsfc_mat, axis = 0)
+    return av_across_subs
+def perm_matrices_DIFF(mat1, mat2, num_perms):
+    """
+    purpose: get permutations across all matrices for an ROI
+    input: 
+        - 3D mat TRs x Vox x Subjects for condition 1, condition 2
+        - number of permutations
+    return: array of permuted accuracies between conditions
+    """  
+    perm_arr = []
+
+    for perm in range(num_perms):
+        cond_1_perm = wsfc(mat1, perm = True)
+        cond_2_perm = wsfc(mat2, perm = True)
+        result = cond_2_perm - cond_1_perm
+        # get the average across the 18, 13, 13 SUBTRACTED matrix -- results should be 13 x 13
+        #av_across_subs = np.nanmean(result, axis = 0)
+        assert result.shape == (mat1.shape[0], mat2.shape[0]), 'wrong dim'
+        
+        # Convert these directly to condensed ISFCs (and ISCs)
+        ispcs_c, iscs = squareform_isfc(result)
+        print(f"Condensed ISFCs shape: {ispcs_c.shape}, "
+              f"ISCs shape: {iscs.shape}")
+        ## get shape for transformation later
+        iscs_shape = iscs.shape[0]
+        perm_arr.append(np.hstack((ispcs_c, iscs)))
+    perm_arr = np.vstack(perm_arr) 
+    return perm_arr, iscs_shape
+    
+def perm_matrices(mat1, num_perms):
+    """
+    purpose: get permutations across all matrices for an ROI
+    input: 
+        - 3D mat TRs x Vox x Subjects for condition 1, condition 2
+        - number of permutations
+    return: array of permuted accuracies between conditions
+    """  
+    perm_arr = []
+
+    for perm in range(num_perms):        
+        result = wsfc(mat1, perm = True)
+        # get the average across the 18, 13, 13 SUBTRACTED matrix -- results should be 13 x 13
+        av_across_subs = np.nanmean(result, axis = 0)
+        print(f'RESULT shape {result.shape}')
+        print(f'av across subs shape {av_across_subs.shape}')
+        #assert result.shape == (mat1.shape[0], mat2.shape[0]), 'wrong dim'
+        
+        # Convert these directly to condensed ISFCs (and ISCs)
+        ispcs_c, iscs = squareform_isfc(result)
+        print(f"Condensed ISFCs shape: {ispcs_c.shape}, "
+              f"ISCs shape: {iscs.shape}")
+        ## get shape for transformation later
+        iscs_shape = iscs.shape[0]
+        perm_arr.append(np.hstack((ispcs_c, iscs)))
+    perm_arr = np.vstack(perm_arr) 
+    return perm_arr, iscs_shape
+ 
+# Compute mean with Fisher z-transformation
+def fisher_mean(correlation, axis=None):
+    return np.tanh(np.mean(np.arctanh(correlation), axis=axis))
+
+def shuffle_along_axis(a, axis):
+    idx = np.random.rand(*a.shape).argsort(axis=axis)
+    return np.take_along_axis(a,idx,axis=axis)
+
+    

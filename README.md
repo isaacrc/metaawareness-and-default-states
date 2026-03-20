@@ -16,12 +16,20 @@ The “default mode” of cognition refers to an automatic tendency to simulate 
 
 ### Analysis code:
 - analysis code (`./code/analysis/`)
+- revision analyses (`./revision/code/`)
 
 ### fMRI prep preprocessing code
 - preprocessing: (`/code/preprocessing`)
 
 ### fMRI Data
 - fMRI data is available here: https://doi.org/10.34770/5kae-7k45
+
+### Source Data
+- Preprocessed fMRI data (NIfTI, ISC dictionaries, connectivity matrices) used directly by analysis scripts is stored on the Princeton Neuroscience Institute cluster at: `/jukebox/graziano/coolCatIsaac/mei/`
+- Source data tables for all figures are available in `./revision/results/source_data/`
+
+### Revision
+- Additional analyses, updated figures, and effect size calculations added during peer review are located in `./revision/`
 
 ### Getting Started
 * Clone the Repo

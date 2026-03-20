@@ -1,0 +1,20 @@
+Cluster ID,Size (voxels),x,y,z,Peak Z,Harvard-Oxford Label
+13,104,-16.16,-1.59,56.5,6.040411747599309,Insular Cortex
+5,95,-14.74,-8.16,18.61,5.768411632876367,Background
+16,31,-32.23,-9.19,72.27,5.4595210541164665,"Inferior Frontal Gyrus, pars opercularis"
+15,24,-6.29,63.54,58.88,4.980456247530432,Background
+3,47,-52.46,-80.48,-13.01,4.932195353436362,"Lateral Occipital Cortex, superior division"
+8,177,-45.64,-92.32,59.53,4.880090185220577,Background
+10,38,14.16,44.54,46.24,4.7068056731242045,Background
+6,569,12.05,5.55,32.56,-3.6220325977434826,Paracingulate Gyrus
+1,932,17.36,-24.66,-10.93,-3.6253476336750303,Background
+2,78,-14.42,-23.43,-16.0,-3.6284276555646064,Background
+18,36,-14.49,-23.19,85.92,-3.629948082665819,"Inferior Frontal Gyrus, pars opercularis"
+11,44,25.6,1.99,53.91,-3.63049780091836,Insular Cortex
+9,46,25.51,-34.95,49.59,-3.635742017866516,"Inferior Temporal Gyrus, temporooccipital part"
+4,114,-28.06,23.97,-2.92,-3.6358121091591644,Frontal Pole
+19,31,9.06,-25.48,93.18,-3.6387818906717215,Background
+7,30,-29.08,-24.42,20.4,-3.6528617846056135,Frontal Pole
+14,22,-48.55,-50.0,57.05,-3.6621735398233985,"Supramarginal Gyrus, anterior division"
+17,63,-27.65,25.36,76.79,-3.673389551847693,Background
+12,23,-27.04,-38.04,54.02,-3.7048261978693953,"Inferior Temporal Gyrus, temporooccipital part"
